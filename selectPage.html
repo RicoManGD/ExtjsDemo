@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+   <head>
+   	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <link rel = "stylesheet" type ="text/css" href= "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/theme-crisp/resources/theme-crisp-all.css" / >
+      <script type ="text/javascript"  src = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js" > </script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/locale/locale-zh_CN.js"></script>
+      <script type="text/javascript" >
+         Ext.onReady(function(){
+
+
+         	var statecombobox=Ext.create('Ext.data.Store',{
+            			fields:['state','name'],
+            			data:[{
+            				'state':'暂存',
+            				'name':'暂存'
+            			},{
+            				'state':'测试',
+            				'name':'测试'
+            			}]
+            		});
+         	Ext.define('OrderDataModel', {
+		         extend: 'Ext.data.Model',
+		         fields: [
+		         {name: 'oId', mapping : 'oId'},
+		         {name: 'workDate', mapping : 'workDate'},
+		         {name: 'deliveryDate', mapping : 'deliveryDate'},
+		         {name: 'supplier', mapping : 'supplier'},
+		         {name: 'salesman', mapping : 'salesman'},
+		         {name: 'deliveryAddress', mapping : 'deliveryAddress'},
+		         {name: 'detail', mapping : 'detail'},
+		         {name: 'state', mapping : 'state'},
+		         {name: 'username', mapping : 'username'},
+		         {name: 'phone', mapping : 'phone'}
+		         ]
+		    });
+
+
+         	Ext.create('Ext.form.Panel',{
+         		id: 'Form1',
+            	renderTo: 'form1',
+            	border: true,
+            	width: 1000,
+            	margin: 10,
+            	layout : 'column',
+            	items:[{
+            		id : 'orderId',
+            		xtype:'textfield',
+            		fieldLabel: '采购单号',
+            		margin: 10,
+
+            	},{
+            		id : 'supplier',
+            		xtype:'textfield',
+            		fieldLabel: '供应商',
+            		margin: 10,
+
+            	},{
+            		id:'state',
+            		xtype:'combobox',
+            		fieldLabel: '状态',
+            		margin: 10,
+            		editable : false,
+            		forceSelection : true,
+            		blankText : '请选择',
+            		value : '暂存',
+            		store:statecombobox,
+            		valueField:'state',
+            		displayField:'name'
+
+            	},{
+            		id:'beginDate',
+   					xtype: 'datefield',
+   					fieldLabel: '业务日期',
+   					margin: 10,
+   					editable : false,
+   					format:'Y-m-d'
+				},{ 
+					xtype: 'tbseparator' 
+				},{
+					id:'endDate',
+   					xtype: 'datefield',
+   					fieldLabel: '-',
+					format:'Y-m-d',
+					editable : false,
+					labelSeparator:'',
+					labelWidth: 30,
+   					margin: 10
+				},{
+					xtype:'button',
+					id:'selectBtn',
+					text : '查询',
+					margin: 10,
+					handler: function () {}
+				},{
+					xtype:'button',
+					id:'resetBtn',
+					text : '重置',
+					margin: 10,
+					handler: function () {}
+				}]
+         	});
+
+			
+			var myData = [
+			            { oId:'001', workDate:'2018-03-01', deliveryDate:'2018-04-01',supplier:'GD01',salesman:'Rico01',deliveryAddress:'顺德',detail:'123',state:'暂存',username:'Jack',phone:'12345678900'},
+			            { oId:'002', workDate:'2018-03-02', deliveryDate:'2018-04-01',supplier:'GD01',salesman:'Rico01',deliveryAddress:'顺德',detail:'123',state:'测试',username:'John',phone:'12345678901'},
+			            { oId:'003', workDate:'2018-03-03', deliveryDate:'2018-04-01',supplier:'GD02',salesman:'Rico02',deliveryAddress:'顺德',detail:'123',state:'暂存',username:'Xiaoming',phone:'12345678902'},
+			            { oId:'004', workDate:'2018-03-04', deliveryDate:'2018-04-02',supplier:'GD03',salesman:'Rico03',deliveryAddress:'禅城',detail:'123',state:'暂存',username:'Lisi',phone:'12345678903'}
+			         ];
+			var gridStore = Ext.create('Ext.data.Store', {
+				model: 'OrderDataModel',
+				data: myData
+
+			});
+
+
+
+			Ext.create('Ext.grid.Panel',{
+				id: 'Grid1',
+            	renderTo: 'grid1',
+            	store:gridStore,
+            	border: true,
+            	width: 1000,
+            	height:500,
+            	margin: 10,
+            	stripeRows: true,
+            	columns:[{
+            		header:'采购单号',
+            		dataIndex:'oId',
+            		
+            		
+            	},{
+            		header:'业务日期',
+            		dataIndex:'workDate',
+            		
+            	},{
+            		header:'交货日期',
+            		dataIndex:'deliveryDate',
+            		
+            	},{
+            		header:'供应商',
+            		dataIndex:'supplier',
+            		
+            	},{
+            		header:'业务员',
+            		dataIndex:'salesman',
+            		
+            	},{
+            		header:'交货地址',
+            		dataIndex:'deliveryAddress',
+            		
+            	},{
+            		header:'备注',
+            		dataIndex:'detail',
+            		
+            	},{
+            		header:'状态',
+            		dataIndex:'state',
+            		
+            	},{
+            		header:'联系人',
+            		dataIndex:'username',
+            		
+            	},{
+            		header:'电话',
+            		dataIndex:'phone',
+            		
+            	}],
+            	bbar:[{
+            		xtype: "pagingtoolbar", 
+            		store: gridStore,
+            		displayInfo : true
+         			
+            	}],
+            	tbar:[{
+            		xtype:"button",
+            		text:"新增",
+            		handler: function () {}
+
+            		
+            	},{
+					xtype:"button",
+            		text:"修改",
+            		handler: function () {}
+            	}]
+
+			});
+         	
+
+
+
+
+         });
+
+
+      </script>
+   </head>
+   <body>
+      <div id="form1"></div>
+      <div id="grid1"></div>
+   </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+   <head>
+   	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <link rel = "stylesheet" type ="text/css" href= "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/theme-crisp/resources/theme-crisp-all.css" / >
+      <script type ="text/javascript"  src = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js" > </script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/locale/locale-zh_CN.js"></script>
+      <script type="text/javascript" >
+         Ext.onReady(function(){
+               var statecombobox=Ext.create('Ext.data.Store',{
+                     fields:['state','name'],
+                     data:[{
+                        'state':'暂存',
+                        'name':'暂存'
+                     },{
+                        'state':'测试',
+                        'name':'测试'
+                     }]
+                  });
+
+            Ext.create('Ext.form.Panel',{
+               id: 'Button1',
+               renderTo: 'button1',
+               border: false,
+               width: 1150,
+               height:30,
+               bodyStyle: 'background:#F4F4F4',
+               
+               layout : 'column',
+               items:[{
+                  xtype:'button',
+                  text:'保存',
+                  margin:2,
+                  handler: function () {}
+               },{
+                  xtype:'button',
+                  text:'关闭窗口',
+                  margin:2,
+                  handler: function () {}
+               },{
+                  xtype:'button',
+                  text:'确认',
+                  margin:2,
+                  handler: function () {}
+               },{
+                  xtype:'button',
+                  text:'取消确认',
+                  margin:2,
+                  handler: function () {}
+               },{
+                  xtype:'button',
+                  text:'完成',
+                  margin:2,
+                  handler: function () {}
+               },{
+                  xtype:'button',
+                  text:'取消完成',
+                  margin:2,
+                  handler: function () {}
+               },{
+                  xtype:'button',
+                  text:'作量',
+                  margin:2,
+                  handler: function () {}
+               }]
+            });
+            
+            Ext.create('Ext.form.Panel',{
+               id: 'Form1',
+               renderTo: 'form1',
+               border: true,
+               width: 1150,
+               margin: 2,
+               layout : 'column',
+               items:[{
+                  id : 'orderId',
+                  xtype:'textfield',
+                  fieldLabel: '采购单号',
+                  margin: 2,
+
+               },{
+                  id : 'workDate',
+                  xtype:'datefield',
+                  fieldLabel: '业务日期',
+                  margin: 2,
+                  editable : false,
+                  format:'Y-m-d'
+
+               },{
+                  id : 'deliveryDate',
+                  xtype:'datefield',
+                  fieldLabel: '交货日期',
+                  margin: 2,
+                  editable : false,
+                  format:'Y-m-d'
+
+               },{
+                  id:'salesman',
+                  xtype:'textfield',
+                  fieldLabel: '业务员',
+                  margin: 2,
+
+               },{
+                  id:'supplier',
+                  xtype:'textfield',
+                  fieldLabel: '供应商',
+                  margin: 2,
+               },{
+                  id:'state',
+                  xtype:'combobox',
+                  fieldLabel: '状态',
+                  margin: 2,
+                  editable : false,
+                  forceSelection : true,
+                  blankText : '请选择',
+                  value : '暂存',
+                  store:statecombobox,
+                  valueField:'state',
+                  displayField:'name'
+
+               },{
+                  id:'deliveryAddress',
+                  xtype:'textfield',
+                  fieldLabel: '交货地址',
+                  margin: 2,
+                  width:550
+               },{
+                  id:'username',
+                  xtype:'textfield',
+                  fieldLabel: '联系人',
+                  margin: 2
+                  
+               },{
+                  id:'phone',
+                  xtype:'textfield',
+                  fieldLabel: '电话',
+                  margin: 2
+                  
+               },{
+                  id:'fax',
+                  xtype:'textfield',
+                  fieldLabel: '传真',
+                  margin: 2
+                  
+               },{
+                  id:'detail',
+                  xtype:'textfield',
+                  fieldLabel: '备注',
+                  margin: 2
+                  
+               }]
+
+            });
+
+            Ext.create('Ext.Button',{
+               renderTo: 'button2',
+               text:'采购明细',
+               handler: function () {
+                 
+               }
+
+            });
+
+            Ext.create('Ext.grid.Panel',{
+               renderTo:'grid1',
+               id:'Grid1',
+               
+               border: true,
+               width: 1150,
+               height:500,
+               margin: 10,
+               stripeRows: true,
+               columns:[{
+                  header:'seq',
+                  dataIndex:'seq'
+               },{
+                  header:'交货日期',
+                  dataIndex:'deliveryDate'
+               },{
+                  header:'物料编码',
+                  dataIndex:'materialCode'
+               },{
+                  header:'物料名称',
+                  dataIndex:'materialName'
+               },{
+                  header:'物料单位',
+                  dataIndex:'materialUnit'
+               },{
+                  header:'单位',
+                  dataIndex:'Unit'
+               },{
+                  header:'数量',
+                  dataIndex:'count'
+               },{
+                  header:'备注',
+                  dataIndex:'detail'
+               }],
+               bbar:[{
+                  xtype: "pagingtoolbar", 
+                  
+                  displayInfo : true
+                  
+               }],
+               tbar:[{
+                  xtype:"button",
+                  text:"新增",  
+               },{
+               xtype:"button",
+                  text:"删除"
+               }]
+
+            });
+
+
+         });
+
+
+      </script>
+   </head>
+   <body>
+      <div id="button1" ></div>
+      <div id="form1"></div>
+      <div id="button2"></div>
+      <div id="grid1"></div>
+   </body>
+</html>
